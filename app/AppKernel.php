@@ -16,6 +16,10 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new pingdecopong\FormFreezeBundle\pingdecopongFormFreezeBundle(),//FormFreeze
+            new pingdecopong\PagerBundle\pingdecopongPagerBundle(),//Pager
+            new pingdecopong\PDPGeneratorBundle\pingdecopongPDPGeneratorBundle(),
+            new pingdecopong\SamplePDPGeneratorBundle\pingdecopongSamplePDPGeneratorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

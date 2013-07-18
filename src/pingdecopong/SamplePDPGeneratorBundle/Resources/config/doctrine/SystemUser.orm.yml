@@ -1,0 +1,19 @@
+pingdecopong\SamplePDPGeneratorBundle\Entity\SystemUser:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        email:
+            type: string
+            length: 255
+            nullable: true
+    oneToMany:
+        watertanks:
+            targetEntity: Watertank
+            mappedBy: systemuser
+    manyToOne: {  }
+    manyToMany: {  }

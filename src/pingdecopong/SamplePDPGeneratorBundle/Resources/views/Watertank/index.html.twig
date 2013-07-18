@@ -1,0 +1,55 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Watertank list</h1>
+
+<form action="{{ path('watertank') }}" novalidate method="post" {{ form_enctype(form) }} name="watertank_list">
+
+    {{ pdp_pager_hidden_render(pager) }}
+
+    <div class="search_box">
+        {{ form_widget(form.search) }}
+        <input type="submit" value="検索">
+    </div>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                {{ pdp_pager_column_render(pager) }}
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('watertank_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.Name }}</td>
+                <td>{{ entity.SystemUserId }}</td>
+                <td>{{ entity.IntegerData }}</td>
+                <td>{{ entity.DefTest1 }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('watertank_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('watertank_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ pdp_pager_selector_render(pager) }}
+    {{ pdp_pager_pagesize_render(pager) }}
+</form>
+
+        <ul>
+        <li>
+            <a href="{{ path('watertank_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

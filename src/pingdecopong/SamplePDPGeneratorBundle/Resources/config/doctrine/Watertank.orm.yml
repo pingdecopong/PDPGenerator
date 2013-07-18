@@ -1,0 +1,35 @@
+pingdecopong\SamplePDPGeneratorBundle\Entity\Watertank:
+    type: entity
+    indexes:
+        testindex1:
+            columns:
+                - IntegerData
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        Name:
+            type: string
+            length: 255
+            nullable: true
+        SystemUserId:
+            type: integer
+            nullable: true
+        IntegerData:
+            type: integer
+            length: 11
+            nullable: false
+        DefTest1:
+            type: boolean
+            nullable: true
+    oneToMany: {  }
+    manyToOne:
+        systemuser:
+            targetEntity: SystemUser
+            inversedBy: watertanks
+            joinColumns:
+                SystemUserId:
+                    referencedColumnName: id
+    manyToMany: {  }

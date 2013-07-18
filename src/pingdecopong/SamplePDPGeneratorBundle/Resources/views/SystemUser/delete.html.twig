@@ -1,0 +1,41 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>SystemUser</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ entity.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form action="{{ path('systemuser_delete', { 'id': entity.id }) }}" novalidate method="post" {{ form_enctype(form) }} name="systemuser_delete_form">
+        {{ form_widget(form) }}
+        <input type="submit" value="delete"/>
+    </form>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('systemuser') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('systemuser_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('systemuser_delete', { 'id': entity.id }) }}">
+            Delete
+        </a>
+    </li>
+</ul>
+{% endblock %}

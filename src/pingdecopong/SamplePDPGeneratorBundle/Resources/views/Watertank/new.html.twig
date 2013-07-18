@@ -1,0 +1,46 @@
+{% extends '::base.html.twig' %}
+{% form_theme form 'pingdecopongFormFreezeBundle:Form:form_layout.html.twig' %}
+
+{% block body -%}
+    <h1>Watertank creation</h1>
+
+    <form action="{{ path('watertank_new') }}" novalidate method="post" {{ form_enctype(form) }} name="watertank_new_form">
+        {{ form_widget(form) }}
+        <p>
+            {% if mode == 'input' %}
+                <button onclick="postConfirm()">確認</button>
+            {% elseif mode == 'confirm' %}
+                <button onclick="postBack()">戻る</button>
+                <button onclick="postSubmit()">登録</button>
+            {% endif %}
+        </p>
+        <input id="_button_action" type="hidden" value="" name="_button_action">
+    </form>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('watertank') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        //<![CDATA[
+        function postConfirm(){
+            document.watertank_new_form._button_action.value = "confirm";
+            document.watertank_new_form.submit();
+        }
+        function postSubmit(){
+            document.watertank_new_form._button_action.value = "submit";
+            document.watertank_new_form.submit();
+        }
+        function postBack(){
+            document.watertank_new_form._button_action.value = "";
+            document.watertank_new_form.submit();
+        }
+        //]]>
+    </script>
+{% endblock %}

@@ -1,0 +1,10 @@
+pingdecopong_sample_pdp_generator:
+    resource: "@pingdecopongSamplePDPGeneratorBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pingdecopong_pdp_generator:
+    resource: "@pingdecopongPDPGeneratorBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
