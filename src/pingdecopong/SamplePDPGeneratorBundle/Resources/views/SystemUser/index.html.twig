@@ -18,6 +18,16 @@
 
         <h1 class="caption"><span id="selectFolderName">一覧</span></h1>
 
+        <div class="functionListArea">
+            <ul class="functionList clearfix">
+                <li class="home">
+                    <a href="{{ path('systemuser_new') }}">
+                        新規作成
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
         <table class="gridTable" style="width:100%;">
             <thead>
                 <tr>
@@ -72,19 +82,17 @@
 
             <div class="pagerAreaLeft">
                     <ul class="pager">
-{% for page in pager.PagerSelector.PageNo.Rows %}
+                        {% for page in pager.PagerSelector.PageNo.Rows %}
 
-    {% if page.select %}
-                        <li>
-        {{ page.label }}
-                        </li>
-    {% else %}
-                        <li>
-        <a href="{{ path(pager.LinkRouteName, page.query)|raw }}" >{{ page.label }}</a>
-                        </li>
-    {% endif %}
+                            {% if page.select %}
+                                <li><a href="#">{{ page.label }}</a></li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ path(pager.LinkRouteName, page.query)|raw }}" >{{ page.label }}</a>
+                                </li>
+                            {% endif %}
 
-{% endfor %}
+                        {% endfor %}
                     </ul>
             </div>
 
@@ -92,15 +100,8 @@
         </div>
 
 
-        <div class="functionListArea">
-            <ul class="functionList clearfix">
-                <li class="home">
-                    <a href="{{ path('systemuser_new') }}">
-                        新規作成
-                    </a>
-                </li>
-            </ul>
-        </div>
+
+
     </section>
 </form>
 
