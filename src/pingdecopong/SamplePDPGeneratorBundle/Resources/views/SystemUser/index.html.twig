@@ -56,7 +56,9 @@
                         </th>
                     {% endfor %}
 
-                    <th class="mainTh function_icon_cell">操作</th>
+                    <th class="mainTh function_icon_cell"></th>
+                    <th class="mainTh function_icon_cell"></th>
+                    <th class="mainTh function_icon_cell"></th>
                 </tr>
             </thead>
             <tbody class="evenRows">
@@ -64,15 +66,14 @@
                 <tr>
                     <td><a href="{{ path('systemuser_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                     <td>{{ entity.email }}</td>
-                    <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('systemuser_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('systemuser_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                    <td class="function_icon_cell">
+                        <a href="{{ path('systemuser_show', { 'id': entity.id }) }}"><img src="{{ asset('bundles/pingdecopongpdpgenerator/img/table.png') }}" width="16" height="16"></a>
+                    </td>
+                    <td class="function_icon_cell">
+                        <a href="{{ path('systemuser_edit', { 'id': entity.id }) }}"><img src="{{ asset('bundles/pingdecopongpdpgenerator/img/ico_pencil.png') }}" width="16" height="16"></a>
+                    </td>
+                    <td class="function_icon_cell">
+                        <a href="{{ path('systemuser_delete', { 'id': entity.id }) }}"><img src="{{ asset('bundles/pingdecopongpdpgenerator/img/asico_del_bl.png') }}" width="16" height="16" alt="削除"></a>
                     </td>
                 </tr>
             {% endfor %}
@@ -96,7 +97,6 @@
                         {% endfor %}
                     </ul>
                     <label>表示件数
-                        {{ pdp_pager_pagesize_render(pager) }}
 
                         {{ form_widget(pager.PagerFormView.s.pageSize) }}
                         <script type="text/javascript">
