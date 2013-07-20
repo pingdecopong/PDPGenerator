@@ -79,13 +79,14 @@
             </tbody>
         </table>
         <div class="pagerArea clearfix">
-
             <div class="pagerAreaLeft">
                     <ul class="pager">
                         {% for page in pager.PagerSelector.PageNo.Rows %}
 
                             {% if page.select %}
-                                <li><a href="#">{{ page.label }}</a></li>
+                                <li class="nowPage">
+                                    <a href="#">{{ page.label }}</a>
+                                </li>
                             {% else %}
                                 <li>
                                     <a href="{{ path(pager.LinkRouteName, page.query)|raw }}" >{{ page.label }}</a>
@@ -94,9 +95,30 @@
 
                         {% endfor %}
                     </ul>
-            </div>
+                    <label>表示件数
+                        {{ pdp_pager_pagesize_render(pager) }}
 
-            {{ pdp_pager_pagesize_render(pager) }}
+                        {{ form_widget(pager.PagerFormView.s.pageSize) }}
+                        <script type="text/javascript">
+                            //<![CDATA[
+                            $('#{{ pager.PagerFormView.s.pageSize.vars.id }}').change(function(){
+                                switch($(this).children(':selected').val()){
+
+                                    {% for key, param_list in pager.PageSizeParamList %}
+
+                                    case '{{ key }}':
+                                        location.href = "{{ path(pager.LinkRouteName, param_list)|raw }}";
+                                        break;
+
+                                    {% endfor %}
+
+                                }
+                            });
+                            //]]>
+                        </script>
+                    </label>
+            </div>
+            <div class="pagerAreaRight">全 {{ pager.AllCount }} 件</div>
         </div>
 
 
