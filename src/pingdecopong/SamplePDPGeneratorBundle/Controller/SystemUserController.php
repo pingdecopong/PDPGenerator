@@ -129,10 +129,15 @@ class SystemUserController extends Controller
         //クエリー実行
         $entities = $queryBuilder->getQuery()->getResult();
 
+        //returnURL生成
+        $returnUrlQueryDataArray = $pager->getAllFormQueryStrings();
+        $returnUrlQueryString = urlencode(http_build_query($returnUrlQueryDataArray));
+
         return array(
             'form' => $formView,
             'pager' => $pager->createView(),
             'entities' => $entities,
+            'returnUrlParam' => $returnUrlQueryString,
         );
     }
 
@@ -145,10 +150,13 @@ class SystemUserController extends Controller
      */
     public function newAction()
     {
-        $entity = new SystemUser();
-        $form   = $this->createForm(new SystemUserType(), $entity);
 
         $request = $this->getRequest();
+        //returnUrlデコード
+        $returnUrlQueryString = urldecode($request->get('ret'));
+
+        $entity = new SystemUser();
+        $form   = $this->createForm(new SystemUserType(), $entity);
         $formModel = new SystemUser();
         $formType = new SystemUserType();
 
@@ -177,6 +185,7 @@ class SystemUserController extends Controller
                             'mode' => "confirm",
                             'entity' => $formModel,
                             'form' => $confirmForm->createView(),
+                            'returnUrlParam' => $returnUrlQueryString,
                         );
 
                     }else if($buttonAction == "submit")
@@ -200,11 +209,13 @@ class SystemUserController extends Controller
             }
         }
 
+
         return array(
             'mode' => "input",
             'validate' => false,
             'entity' => $formModel,
             'form' => $form->createView(),
+            'returnUrlParam' => $returnUrlQueryString,
         );
     }
 
@@ -217,6 +228,7 @@ class SystemUserController extends Controller
      */
     public function showAction($id)
     {
+        $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('pingdecopongSamplePDPGeneratorBundle:SystemUser')->find($id);
@@ -225,8 +237,12 @@ class SystemUserController extends Controller
             throw $this->createNotFoundException('Unable to find SystemUser entity.');
         }
 
+        //returnUrlデコード
+        $returnUrlQueryString = urldecode($request->get('ret'));
+
         return array(
             'entity'      => $entity,
+            'returnUrlParam' => $returnUrlQueryString,
         );
     }
 
@@ -239,7 +255,10 @@ class SystemUserController extends Controller
      */
     public function editAction($id)
     {
+
         $request = $this->getRequest();
+        //returnUrlデコード
+        $returnUrlQueryString = urldecode($request->get('ret'));
         $formType = new SystemUserType();
 
         $em = $this->getDoctrine()->getManager();
@@ -273,6 +292,7 @@ class SystemUserController extends Controller
                             'mode' => "confirm",
                             'entity' => $entity,
                             'form' => $confirmForm->createView(),
+                            'returnUrlParam' => $returnUrlQueryString,
                         );
 
                     }else if($buttonAction == "submit")
@@ -300,6 +320,7 @@ class SystemUserController extends Controller
             'validate' => false,
             'entity' => $entity,
             'form' => $form->createView(),
+            'returnUrlParam' => $returnUrlQueryString,
         );
     }
     /**
@@ -312,6 +333,9 @@ class SystemUserController extends Controller
     public function deleteAction($id)
     {
         $request = $this->getRequest();
+        //returnUrlデコード
+        $returnUrlQueryString = urldecode($request->get('ret'));
+
         $form = $this->createFormBuilder(array('id' => $id))
             ->add('id', 'hidden')
             ->getForm();
@@ -342,6 +366,7 @@ class SystemUserController extends Controller
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
+            'returnUrlParam' => $returnUrlQueryString,
         );
     }
 

@@ -19,8 +19,8 @@
         "sensio/framework-extra-bundle": "2.3.*",
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
-        "pingdecopong/FormFreezeBundle": "0.0.2",
-        "pingdecopong/PagerBundle": "0.0.1"
+        "pingdecopong/FormFreezeBundle": "0.0.*",
+        "pingdecopong/PagerBundle": "0.0.*"
     },
     "scripts": {
         "post-install-cmd": [

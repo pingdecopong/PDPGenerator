@@ -1,41 +1,35 @@
-{% extends '::base.html.twig' %}
+{% extends 'pingdecopongSamplePDPGeneratorBundle:SystemUser:layout.html.twig' %}
 
 {% block body -%}
-    <h1>SystemUser</h1>
+    <header>
+        <h1>SystemUser削除</h1>
+    </header>
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ entity.email }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <section class="section">
+        <h1 class="caption"><span id="selectFolderName">SystemUser詳細</span></h1>
+        <div class="functionListArea">
+            <ul class="functionList clearfix">
+                <li class="home"><a href="{{ path('systemuser') }}?{{ returnUrlParam|raw }}">一覧へもどる</a></li>
+            </ul>
+        </div>
+        <table width="600" border="0" cellpadding="0" cellspacing="0" class="detailTable">
+                <tr>
+                    <th scope="row">Id</th>
+                        <td>{{ entity.id }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Email</th>
+                        <td>{{ entity.email }}</td>
+                </tr>
+        </table>
+        <form action="{{ path('systemuser_delete', { 'id': entity.id }) }}" novalidate method="post" {{ form_enctype(form) }} name="systemuser_delete_form">
 
-    <form action="{{ path('systemuser_delete', { 'id': entity.id }) }}" novalidate method="post" {{ form_enctype(form) }} name="systemuser_delete_form">
-        {{ form_widget(form) }}
-        <input type="submit" value="delete"/>
-    </form>
+            <div class="submit_box">
+                <input type="submit" value="削除" style="width:100px;"/>
+            </div>
+            <input id="_button_action" type="hidden" value="" name="_button_action">
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('systemuser') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('systemuser_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('systemuser_delete', { 'id': entity.id }) }}">
-            Delete
-        </a>
-    </li>
-</ul>
+            {{ form_end(form) }}
+    </section>
+
 {% endblock %}

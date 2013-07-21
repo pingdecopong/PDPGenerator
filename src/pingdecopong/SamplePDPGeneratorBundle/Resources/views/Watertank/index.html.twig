@@ -1,55 +1,178 @@
-{% extends '::base.html.twig' %}
+{% extends 'pingdecopongSamplePDPGeneratorBundle:Watertank:layout.html.twig' %}
 
 {% block body -%}
-    <h1>Watertank list</h1>
-
 <form action="{{ path('watertank') }}" novalidate method="post" {{ form_enctype(form) }} name="watertank_list">
+    <header>
+        <h1>Watertank list type2</h1>
+    </header>
+    <section class="section">
+        <h1 class="caption">検索</h1>
 
-    {{ pdp_pager_hidden_render(pager) }}
 
-    <div class="search_box">
-        {{ form_widget(form.search) }}
-        <input type="submit" value="検索">
-    </div>
+        {{ pdp_pager_hidden_render(pager) }}
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                {{ pdp_pager_column_render(pager) }}
-                <th>操作</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('watertank_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.Name }}</td>
-                <td>{{ entity.SystemUserId }}</td>
-                <td>{{ entity.IntegerData }}</td>
-                <td>{{ entity.DefTest1 }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('watertank_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('watertank_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {{ pdp_pager_selector_render(pager) }}
-    {{ pdp_pager_pagesize_render(pager) }}
-</form>
+        <div class="search_box">
 
-        <ul>
-        <li>
-            <a href="{{ path('watertank_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+            <table cellspacing="0">
+                <tbody>
+                    <tr>
+                        <th>{{ form_label(form.search.Name) }}</th>
+                        <td><label>
+                                {{ form_errors(form.search.Name) }}
+                                {{ form_widget(form.search.Name) }}
+                            </label></td>
+                    </tr>
+                    <tr>
+                        <th>{{ form_label(form.search.SystemUserId) }}</th>
+                        <td><label>
+                                {{ form_errors(form.search.SystemUserId) }}
+                                {{ form_widget(form.search.SystemUserId) }}
+                            </label></td>
+                    </tr>
+                    <tr>
+                        <th>{{ form_label(form.search.IntegerData) }}</th>
+                        <td><label>
+                                {{ form_errors(form.search.IntegerData) }}
+                                {{ form_widget(form.search.IntegerData) }}
+                            </label></td>
+                    </tr>
+                    <tr>
+                        <th>{{ form_label(form.search.DefTest1) }}</th>
+                        <td><label>
+                                {{ form_errors(form.search.DefTest1) }}
+                                {{ form_widget(form.search.DefTest1) }}
+                            </label></td>
+                    </tr>
+                    <tr>
+                        <th>{{ form_label(form.search.systemuser) }}</th>
+                        <td><label>
+                                {{ form_errors(form.search.systemuser) }}
+                                {{ form_widget(form.search.systemuser) }}
+                            </label></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td nowrap>
+                            <input class="button_100" type="submit" value="検索">
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <h1 class="caption"><span id="selectFolderName">一覧</span></h1>
+
+        <div class="functionListArea">
+            <ul class="functionList clearfix">
+                <li class="home">
+                    <a href="{{ path('watertank_new', {ret: returnUrlParam}) }}">
+                        新規作成
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <table class="gridTable" style="width:100%;">
+            <thead>
+                <tr>
+
+                    {% for header in pager.PagerColumn.Rows %}
+                        <th class="mainTh sort_cell">
+                            {% if header.Enable %}
+                                {% if header.sortSelected %}
+                                    {% if header.SortType == 'asc' %}
+                                        <a href="{{ path(pager.LinkRouteName, header.query)|raw }}" >
+                                            {{ header.label }}↓
+                                        </a>
+                                    {% elseif header.SortType == 'desc' %}
+                                        <a href="{{ path(pager.LinkRouteName, header.query)|raw }}" >
+                                            {{ header.label }}↑
+                                        </a>
+                                    {% endif %}
+                                {% else %}
+                                    <a href="{{ path(pager.LinkRouteName, header.query)|raw }}" >
+                                        {{ header.label }}
+                                    </a>
+                                {% endif %}
+                            {% else %}
+                                {{ header.label }}
+                            {% endif %}
+                        </th>
+                    {% endfor %}
+
+                    <th class="mainTh function_icon_cell"></th>
+                    <th class="mainTh function_icon_cell"></th>
+                    <th class="mainTh function_icon_cell"></th>
+                </tr>
+            </thead>
+            <tbody class="evenRows">
+            {% for entity in entities %}
+                <tr>
+                    <td><a href="{{ path('watertank_show', { 'id': entity.id, ret: returnUrlParam }) }}">{{ entity.id }}</a></td>
+                    <td>{{ entity.Name }}</td>
+                    <td>{{ entity.SystemUserId }}</td>
+                    <td>{{ entity.IntegerData }}</td>
+                    <td>{{ entity.DefTest1 }}</td>
+                    <td class="function_icon_cell">
+                        <a href="{{ path('watertank_show', { 'id': entity.id, ret: returnUrlParam }) }}"><img src="{{ asset('bundles/pingdecopongpdpgenerator/img/table.png') }}" width="16" height="16"></a>
+                    </td>
+                    <td class="function_icon_cell">
+                        <a href="{{ path('watertank_edit', { 'id': entity.id, ret: returnUrlParam }) }}"><img src="{{ asset('bundles/pingdecopongpdpgenerator/img/ico_pencil.png') }}" width="16" height="16"></a>
+                    </td>
+                    <td class="function_icon_cell">
+                        <a href="{{ path('watertank_delete', { 'id': entity.id, ret: returnUrlParam }) }}"><img src="{{ asset('bundles/pingdecopongpdpgenerator/img/asico_del_bl.png') }}" width="16" height="16" alt="削除"></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="pagerArea clearfix">
+            <div class="pagerAreaLeft">
+                    <ul class="pager">
+                        {% for page in pager.PagerSelector.PageNo.Rows %}
+
+                            {% if page.select %}
+                                <li class="nowPage">
+                                    <a href="#">{{ page.label }}</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ path(pager.LinkRouteName, page.query)|raw }}" >{{ page.label }}</a>
+                                </li>
+                            {% endif %}
+
+                        {% endfor %}
+                    </ul>
+                    <label>表示件数
+
+                        {{ form_widget(pager.PagerFormView.s.pageSize) }}
+                        <script type="text/javascript">
+                            //<![CDATA[
+                            $('#{{ pager.PagerFormView.s.pageSize.vars.id }}').change(function(){
+                                switch($(this).children(':selected').val()){
+
+                                    {% for key, param_list in pager.PageSizeParamList %}
+
+                                    case '{{ key }}':
+                                        location.href = "{{ path(pager.LinkRouteName, param_list)|raw }}";
+                                        break;
+
+                                    {% endfor %}
+
+                                }
+                            });
+                            //]]>
+                        </script>
+                    </label>
+            </div>
+            <div class="pagerAreaRight">全 {{ pager.AllCount }} 件</div>
+        </div>
+
+
+
+
+    </section>
+    {{ form_end(form) }}
+
+{% endblock %}

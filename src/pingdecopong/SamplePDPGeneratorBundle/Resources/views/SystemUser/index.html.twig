@@ -21,7 +21,7 @@
         <div class="functionListArea">
             <ul class="functionList clearfix">
                 <li class="home">
-                    <a href="{{ path('systemuser_new') }}">
+                    <a href="{{ path('systemuser_new', {ret: returnUrlParam}) }}">
                         新規作成
                     </a>
                 </li>
@@ -64,16 +64,16 @@
             <tbody class="evenRows">
             {% for entity in entities %}
                 <tr>
-                    <td><a href="{{ path('systemuser_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td><a href="{{ path('systemuser_show', { 'id': entity.id, ret: returnUrlParam }) }}">{{ entity.id }}</a></td>
                     <td>{{ entity.email }}</td>
                     <td class="function_icon_cell">
-                        <a href="{{ path('systemuser_show', { 'id': entity.id }) }}"><img src="{{ asset('bundles/pingdecopongpdpgenerator/img/table.png') }}" width="16" height="16"></a>
+                        <a href="{{ path('systemuser_show', { 'id': entity.id, ret: returnUrlParam }) }}"><img src="{{ asset('bundles/pingdecopongpdpgenerator/img/table.png') }}" width="16" height="16"></a>
                     </td>
                     <td class="function_icon_cell">
-                        <a href="{{ path('systemuser_edit', { 'id': entity.id }) }}"><img src="{{ asset('bundles/pingdecopongpdpgenerator/img/ico_pencil.png') }}" width="16" height="16"></a>
+                        <a href="{{ path('systemuser_edit', { 'id': entity.id, ret: returnUrlParam }) }}"><img src="{{ asset('bundles/pingdecopongpdpgenerator/img/ico_pencil.png') }}" width="16" height="16"></a>
                     </td>
                     <td class="function_icon_cell">
-                        <a href="{{ path('systemuser_delete', { 'id': entity.id }) }}"><img src="{{ asset('bundles/pingdecopongpdpgenerator/img/asico_del_bl.png') }}" width="16" height="16" alt="削除"></a>
+                        <a href="{{ path('systemuser_delete', { 'id': entity.id, ret: returnUrlParam }) }}"><img src="{{ asset('bundles/pingdecopongpdpgenerator/img/asico_del_bl.png') }}" width="16" height="16" alt="削除"></a>
                     </td>
                 </tr>
             {% endfor %}

@@ -96,13 +96,6 @@ class WatertankController extends Controller
 
         //検索
         $data = $form->getData();
-        //id
-        $searchId = $data['search']->getId();
-        if(isset($searchId) && $form['search']['id']->isValid())
-        {
-            $queryBuilder = $queryBuilder->andWhere('u.id LIKE :Id')
-                ->setParameter('Id', '%'.$searchId.'%');
-        }
         //Name
         $searchName = $data['search']->getName();
         if(isset($searchName) && $form['search']['Name']->isValid())
@@ -114,15 +107,15 @@ class WatertankController extends Controller
         $searchSystemuserid = $data['search']->getSystemuserid();
         if(isset($searchSystemuserid) && $form['search']['SystemUserId']->isValid())
         {
-            $queryBuilder = $queryBuilder->andWhere('u.SystemUserId LIKE :Systemuserid')
-                ->setParameter('Systemuserid', '%'.$searchSystemuserid.'%');
+            $queryBuilder = $queryBuilder->andWhere('u.SystemUserId = :Systemuserid')
+                ->setParameter('Systemuserid', $searchSystemuserid);
         }
         //IntegerData
         $searchIntegerdata = $data['search']->getIntegerdata();
         if(isset($searchIntegerdata) && $form['search']['IntegerData']->isValid())
         {
-            $queryBuilder = $queryBuilder->andWhere('u.IntegerData LIKE :Integerdata')
-                ->setParameter('Integerdata', '%'.$searchIntegerdata.'%');
+            $queryBuilder = $queryBuilder->andWhere('u.IntegerData = :Integerdata')
+                ->setParameter('Integerdata', $searchIntegerdata);
         }
         //DefTest1
         $searchDeftest1 = $data['search']->getDeftest1();
@@ -130,6 +123,15 @@ class WatertankController extends Controller
         {
             $queryBuilder = $queryBuilder->andWhere('u.DefTest1 LIKE :Deftest1')
                 ->setParameter('Deftest1', '%'.$searchDeftest1.'%');
+        }
+
+        //relation 検索
+        //systemuser
+        $searchSystemuser = $data['search']->getSystemuser();
+        if(isset($searchSystemuser) && $form['search']['systemuser']->isValid())
+        {
+            $queryBuilder = $queryBuilder->andWhere('u.systemuser = :Systemuser')
+                ->setParameter('Systemuser', $searchSystemuser);
         }
 
         //全件数取得
@@ -165,10 +167,15 @@ class WatertankController extends Controller
         //クエリー実行
         $entities = $queryBuilder->getQuery()->getResult();
 
+        //returnURL生成
+        $returnUrlQueryDataArray = $pager->getAllFormQueryStrings();
+        $returnUrlQueryString = urlencode(http_build_query($returnUrlQueryDataArray));
+
         return array(
             'form' => $formView,
             'pager' => $pager->createView(),
             'entities' => $entities,
+            'returnUrlParam' => $returnUrlQueryString,
         );
     }
 
@@ -181,10 +188,13 @@ class WatertankController extends Controller
      */
     public function newAction()
     {
-        $entity = new Watertank();
-        $form   = $this->createForm(new WatertankType(), $entity);
 
         $request = $this->getRequest();
+        //returnUrlデコード
+        $returnUrlQueryString = urldecode($request->get('ret'));
+
+        $entity = new Watertank();
+        $form   = $this->createForm(new WatertankType(), $entity);
         $formModel = new Watertank();
         $formType = new WatertankType();
 
@@ -213,6 +223,7 @@ class WatertankController extends Controller
                             'mode' => "confirm",
                             'entity' => $formModel,
                             'form' => $confirmForm->createView(),
+                            'returnUrlParam' => $returnUrlQueryString,
                         );
 
                     }else if($buttonAction == "submit")
@@ -236,11 +247,13 @@ class WatertankController extends Controller
             }
         }
 
+
         return array(
             'mode' => "input",
             'validate' => false,
             'entity' => $formModel,
             'form' => $form->createView(),
+            'returnUrlParam' => $returnUrlQueryString,
         );
     }
 
@@ -253,6 +266,7 @@ class WatertankController extends Controller
      */
     public function showAction($id)
     {
+        $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('pingdecopongSamplePDPGeneratorBundle:Watertank')->find($id);
@@ -261,8 +275,12 @@ class WatertankController extends Controller
             throw $this->createNotFoundException('Unable to find Watertank entity.');
         }
 
+        //returnUrlデコード
+        $returnUrlQueryString = urldecode($request->get('ret'));
+
         return array(
             'entity'      => $entity,
+            'returnUrlParam' => $returnUrlQueryString,
         );
     }
 
@@ -275,7 +293,10 @@ class WatertankController extends Controller
      */
     public function editAction($id)
     {
+
         $request = $this->getRequest();
+        //returnUrlデコード
+        $returnUrlQueryString = urldecode($request->get('ret'));
         $formType = new WatertankType();
 
         $em = $this->getDoctrine()->getManager();
@@ -309,6 +330,7 @@ class WatertankController extends Controller
                             'mode' => "confirm",
                             'entity' => $entity,
                             'form' => $confirmForm->createView(),
+                            'returnUrlParam' => $returnUrlQueryString,
                         );
 
                     }else if($buttonAction == "submit")
@@ -336,6 +358,7 @@ class WatertankController extends Controller
             'validate' => false,
             'entity' => $entity,
             'form' => $form->createView(),
+            'returnUrlParam' => $returnUrlQueryString,
         );
     }
     /**
@@ -348,6 +371,9 @@ class WatertankController extends Controller
     public function deleteAction($id)
     {
         $request = $this->getRequest();
+        //returnUrlデコード
+        $returnUrlQueryString = urldecode($request->get('ret'));
+
         $form = $this->createFormBuilder(array('id' => $id))
             ->add('id', 'hidden')
             ->getForm();
@@ -378,6 +404,7 @@ class WatertankController extends Controller
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
+            'returnUrlParam' => $returnUrlQueryString,
         );
     }
 

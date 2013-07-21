@@ -1,36 +1,28 @@
-{% extends '::base.html.twig' %}
+{% extends 'pingdecopongSamplePDPGeneratorBundle:SystemUser:layout.html.twig' %}
 
 {% block body -%}
-    <h1>SystemUser</h1>
+    <header>
+        <h1>SystemUser詳細</h1>
+    </header>
+    <section class="section">
+        <h1 class="caption"><span id="selectFolderName">SystemUser詳細</span></h1>
+        <div class="functionListArea">
+            <ul class="functionList clearfix">
+                <li class="home"><a href="{{ path('systemuser') }}?{{ returnUrlParam|raw }}">一覧へもどる</a></li>
+                <li class="home"><a href="{{ path('systemuser_edit', { 'id': entity.id }) }}?ret={{ app.request.get('ret')|raw }}">編集</a></li>
+                <li class="home"><a href="{{ path('systemuser_delete', { 'id': entity.id }) }}?ret={{ app.request.get('ret')|raw }}">削除</a></li>
+            </ul>
+        </div>
+        <table width="600" border="0" cellpadding="0" cellspacing="0" class="detailTable">
+                <tr>
+                    <th scope="row">Id</th>
+                        <td>{{ entity.id }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Email</th>
+                        <td>{{ entity.email }}</td>
+                </tr>
+        </table>
+    </section>
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ entity.email }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('systemuser') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('systemuser_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('systemuser_delete', { 'id': entity.id }) }}">
-            Delete
-        </a>
-    </li>
-</ul>
 {% endblock %}
