@@ -28,6 +28,6 @@ class WatertankType extends AbstractType
 
     public function getName()
     {
-        return 'pingdecopong_samplepdpgeneratorbundle_watertanktype';
+        return 'Watertank';
     }
 }

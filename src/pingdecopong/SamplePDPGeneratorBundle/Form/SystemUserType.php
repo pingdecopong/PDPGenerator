@@ -24,6 +24,6 @@ class SystemUserType extends AbstractType
 
     public function getName()
     {
-        return 'pingdecopong_samplepdpgeneratorbundle_systemusertype';
+        return 'SystemUser';
     }
 }

@@ -6,28 +6,25 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class WatertankSearchType extends AbstractType
+class SubFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Name')
-            ->add('SystemUserId')
-            ->add('IntegerData')
-            ->add('DefTest1')
-            ->add('systemuser')
+            ->add('buttonAction', 'hidden')
+            ->add('returnAddress', 'hidden')
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'pingdecopong\SamplePDPGeneratorBundle\Entity\Watertank'
+            'data_class' => 'pingdecopong\SamplePDPGeneratorBundle\Form\SubFormModel'
         ));
     }
 
     public function getName()
     {
-        return 'Watertank';
+        return 'subform';
     }
 }

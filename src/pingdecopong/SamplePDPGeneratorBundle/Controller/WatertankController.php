@@ -5,6 +5,8 @@ namespace pingdecopong\SamplePDPGeneratorBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use pingdecopong\PagerBundle\Pager\Pager;
+use pingdecopong\PDPGeneratorBundle\Lib\SubFormModel;
+use pingdecopong\PDPGeneratorBundle\Lib\SubFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -190,24 +192,30 @@ class WatertankController extends Controller
     {
 
         $request = $this->getRequest();
+        $formFactory = $this->get('form.factory');
         //returnUrlデコード
         $returnUrlQueryString = urldecode($request->get('ret'));
 
-        $entity = new Watertank();
-        $form   = $this->createForm(new WatertankType(), $entity);
         $formModel = new Watertank();
         $formType = new WatertankType();
+        $subFormModel = new SubFormModel();
+        $subFormType = new SubFormType();
+        $subFormModel->setReturnAddress($returnUrlQueryString);
 
         /* @var $builder \Symfony\Component\Form\FormBuilderInterface */
-        $builder = $this->get('form.factory')->createBuilder($formType, $formModel);
-        $form = $builder->getForm();
+        $builder =$formFactory->createBuilder();
+        $mainFormBuilder = $formFactory->createBuilder($formType, $formModel);
+        $subFormBuilder = $formFactory->createBuilder($subFormType, $subFormModel);
+        $form = $builder->add($mainFormBuilder)
+            ->add($subFormBuilder)
+            ->getForm();
 
         if($request->isMethod('POST'))
         {
             $form->bind($request);
 
             //button_action
-            $buttonAction = $request->request->get('_button_action');
+            $buttonAction = $subFormModel->getButtonAction();
 
             if($buttonAction == "confirm" || $buttonAction == "submit")
             {
@@ -237,7 +245,7 @@ class WatertankController extends Controller
                         }catch (\Exception $e){
                             throw $e;
                         }
-                        return $this->redirect($this->generateUrl('watertank_show', array('id' => $formModel->getId())));                    }
+                        return $this->redirect($this->generateUrl('watertank_show', array('id' => $formModel->getId(), 'ret' => $subFormModel->getReturnAddress())));                    }
                 }
             }else
             {
@@ -295,9 +303,14 @@ class WatertankController extends Controller
     {
 
         $request = $this->getRequest();
+        $formFactory = $this->get('form.factory');
         //returnUrlデコード
         $returnUrlQueryString = urldecode($request->get('ret'));
+
         $formType = new WatertankType();
+        $subFormModel = new SubFormModel();
+        $subFormType = new SubFormType();
+        $subFormModel->setReturnAddress($returnUrlQueryString);
 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('pingdecopongSamplePDPGeneratorBundle:Watertank')->find($id);
@@ -306,15 +319,19 @@ class WatertankController extends Controller
         }
 
         /* @var $builder \Symfony\Component\Form\FormBuilderInterface */
-        $builder = $this->get('form.factory')->createBuilder($formType, $entity);
-        $form = $builder->getForm();
+        $builder =$formFactory->createBuilder();
+        $mainFormBuilder = $formFactory->createBuilder($formType, $entity);
+        $subFormBuilder = $formFactory->createBuilder($subFormType, $subFormModel);
+        $form = $builder->add($mainFormBuilder)
+            ->add($subFormBuilder)
+            ->getForm();
 
         if($request->isMethod('POST'))
         {
             $form->bind($request);
 
             //button_action
-            $buttonAction = $request->request->get('_button_action');
+            $buttonAction = $subFormModel->getButtonAction();
 
             if($buttonAction == "confirm" || $buttonAction == "submit")
             {
@@ -343,7 +360,7 @@ class WatertankController extends Controller
                         }catch (\Exception $e){
                             throw $e;
                         }
-                    return $this->redirect($this->generateUrl('watertank_show', array('id' => $entity->getId())));                    }
+                    return $this->redirect($this->generateUrl('watertank_show', array('id' => $entity->getId(), 'ret' => $subFormModel->getReturnAddress())));                    }
                 }
             }else
             {
@@ -374,8 +391,10 @@ class WatertankController extends Controller
         //returnUrlデコード
         $returnUrlQueryString = urldecode($request->get('ret'));
 
-        $form = $this->createFormBuilder(array('id' => $id))
+        $form = $this->createFormBuilder(array('id' => $id, 'returnAddress' => $returnUrlQueryString))
             ->add('id', 'hidden')
+            ->add('buttonAction', 'hidden')
+            ->add('returnAddress', 'hidden')
             ->getForm();
 
         $em = $this->getDoctrine()->getManager();
@@ -397,7 +416,10 @@ class WatertankController extends Controller
                 }catch (\Exception $e){
                     throw $e;
                 }
-                return $this->redirect($this->generateUrl('watertank'));
+                $data = $form->getData();
+                //returnUrlデコード
+                $returnUrlQueryString = urldecode($data['returnAddress']);
+                return $this->redirect($this->generateUrl('watertank').'?'.$returnUrlQueryString);
             }
         }
 

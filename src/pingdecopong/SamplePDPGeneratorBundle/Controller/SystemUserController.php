@@ -5,6 +5,8 @@ namespace pingdecopong\SamplePDPGeneratorBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use pingdecopong\PagerBundle\Pager\Pager;
+use pingdecopong\PDPGeneratorBundle\Lib\SubFormModel;
+use pingdecopong\PDPGeneratorBundle\Lib\SubFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -81,13 +83,6 @@ class SystemUserController extends Controller
 
         //検索
         $data = $form->getData();
-        //id
-        $searchId = $data['search']->getId();
-        if(isset($searchId) && $form['search']['id']->isValid())
-        {
-            $queryBuilder = $queryBuilder->andWhere('u.id LIKE :Id')
-                ->setParameter('Id', '%'.$searchId.'%');
-        }
         //email
         $searchEmail = $data['search']->getEmail();
         if(isset($searchEmail) && $form['search']['email']->isValid())
@@ -95,6 +90,8 @@ class SystemUserController extends Controller
             $queryBuilder = $queryBuilder->andWhere('u.email LIKE :Email')
                 ->setParameter('Email', '%'.$searchEmail.'%');
         }
+
+        //relation 検索
 
         //全件数取得
         $queryBuilderCount = clone $queryBuilder;
@@ -152,24 +149,29 @@ class SystemUserController extends Controller
     {
 
         $request = $this->getRequest();
+        $formFactory = $this->get('form.factory');
         //returnUrlデコード
         $returnUrlQueryString = urldecode($request->get('ret'));
 
-        $entity = new SystemUser();
-        $form   = $this->createForm(new SystemUserType(), $entity);
         $formModel = new SystemUser();
         $formType = new SystemUserType();
+        $subFormModel = new SubFormModel();
+        $subFormType = new SubFormType();
 
         /* @var $builder \Symfony\Component\Form\FormBuilderInterface */
-        $builder = $this->get('form.factory')->createBuilder($formType, $formModel);
-        $form = $builder->getForm();
+        $builder =$formFactory->createBuilder();
+        $mainFormBuilder = $formFactory->createBuilder($formType, $formModel);
+        $subFormBuilder = $formFactory->createBuilder($subFormType, $subFormModel);
+        $form = $builder->add($mainFormBuilder)
+            ->add($subFormBuilder)
+            ->getForm();
 
         if($request->isMethod('POST'))
         {
             $form->bind($request);
 
             //button_action
-            $buttonAction = $request->request->get('_button_action');
+            $buttonAction = $subFormModel->getButtonAction();
 
             if($buttonAction == "confirm" || $buttonAction == "submit")
             {

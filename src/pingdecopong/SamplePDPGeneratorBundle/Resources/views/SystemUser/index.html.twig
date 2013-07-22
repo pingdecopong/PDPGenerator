@@ -12,8 +12,25 @@
         {{ pdp_pager_hidden_render(pager) }}
 
         <div class="search_box">
-            {{ form_widget(form.search) }}
-            <input type="submit" value="検索">
+
+            <table cellspacing="0">
+                <tbody>
+                    <tr>
+                        <th>{{ form_label(form.search.email) }}</th>
+                        <td><label>
+                                {{ form_errors(form.search.email) }}
+                                {{ form_widget(form.search.email) }}
+                            </label></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td nowrap>
+                            <input class="button_100" type="submit" value="検索">
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
 
         <h1 class="caption"><span id="selectFolderName">一覧</span></h1>
@@ -125,6 +142,6 @@
 
 
     </section>
-</form>
+    {{ form_end(form) }}
 
 {% endblock %}

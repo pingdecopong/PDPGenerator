@@ -18,38 +18,38 @@
 
             <table width="600" border="0" cellpadding="0" cellspacing="0" class="detailTable">
                     <tr>
-                        <th scope="row">{{ form_label(form.Name) }}</th>
+                        <th scope="row">{{ form_label(form.Watertank.Name) }}</th>
                         <td><label>
-                                {{ form_errors(form.Name) }}
-                                {{ form_widget(form.Name) }}
+                                {{ form_errors(form.Watertank.Name) }}
+                                {{ form_widget(form.Watertank.Name) }}
                             </label></td>
                     </tr>
                     <tr>
-                        <th scope="row">{{ form_label(form.SystemUserId) }}</th>
+                        <th scope="row">{{ form_label(form.Watertank.SystemUserId) }}</th>
                         <td><label>
-                                {{ form_errors(form.SystemUserId) }}
-                                {{ form_widget(form.SystemUserId) }}
+                                {{ form_errors(form.Watertank.SystemUserId) }}
+                                {{ form_widget(form.Watertank.SystemUserId) }}
                             </label></td>
                     </tr>
                     <tr>
-                        <th scope="row">{{ form_label(form.IntegerData) }}</th>
+                        <th scope="row">{{ form_label(form.Watertank.IntegerData) }}</th>
                         <td><label>
-                                {{ form_errors(form.IntegerData) }}
-                                {{ form_widget(form.IntegerData) }}
+                                {{ form_errors(form.Watertank.IntegerData) }}
+                                {{ form_widget(form.Watertank.IntegerData) }}
                             </label></td>
                     </tr>
                     <tr>
-                        <th scope="row">{{ form_label(form.DefTest1) }}</th>
+                        <th scope="row">{{ form_label(form.Watertank.DefTest1) }}</th>
                         <td><label>
-                                {{ form_errors(form.DefTest1) }}
-                                {{ form_widget(form.DefTest1) }}
+                                {{ form_errors(form.Watertank.DefTest1) }}
+                                {{ form_widget(form.Watertank.DefTest1) }}
                             </label></td>
                     </tr>
                     <tr>
-                        <th scope="row">{{ form_label(form.systemuser) }}</th>
+                        <th scope="row">{{ form_label(form.Watertank.systemuser) }}</th>
                         <td><label>
-                                {{ form_errors(form.systemuser) }}
-                                {{ form_widget(form.systemuser) }}
+                                {{ form_errors(form.Watertank.systemuser) }}
+                                {{ form_widget(form.Watertank.systemuser) }}
                             </label></td>
                     </tr>
             </table>
@@ -62,8 +62,10 @@
                 {% endif %}
             </div>
 
-            <input id="_button_action" type="hidden" value="" name="_button_action">
-            {{ form_end(form) }}
+            {{ form_widget(form.subform.buttonAction) }}
+            {{ form_widget(form.subform.returnAddress) }}
+
+        {{ form_end(form) }}
 
     </section>
 
@@ -73,15 +75,15 @@
     <script type="text/javascript">
         //<![CDATA[
         function postConfirm(){
-            document.watertank_edit_form._button_action.value = "confirm";
+            document.watertank_edit_form["{{ form.subform.buttonAction.vars.full_name }}"].value = "confirm";
             document.watertank_edit_form.submit();
         }
         function postSubmit(){
-            document.watertank_edit_form._button_action.value = "submit";
+            document.watertank_edit_form["{{ form.subform.buttonAction.vars.full_name }}"].value = "submit";
             document.watertank_edit_form.submit();
         }
         function postBack(){
-            document.watertank_edit_form._button_action.value = "";
+            document.watertank_edit_form["{{ form.subform.buttonAction.vars.full_name }}"].value = "";
             document.watertank_edit_form.submit();
         }
         //]]>
