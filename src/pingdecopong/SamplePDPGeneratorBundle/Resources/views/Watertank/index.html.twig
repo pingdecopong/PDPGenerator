@@ -13,35 +13,47 @@
 
         <div class="search_box">
 
+            <div class="error_validation">
+                {{ form_errors(form) }}
+            </div>
+
             <table cellspacing="0">
                 <tbody>
                     <tr>
                         <th>{{ form_label(form.search.Name) }}</th>
-                        <td><label>
+                        <td>
+                            <div class="error_validation_inline">
                                 {{ form_errors(form.search.Name) }}
+                            </div>
                                 {{ form_widget(form.search.Name) }}
-                            </label></td>
+                        </td>
                     </tr>
                     <tr>
                         <th>{{ form_label(form.search.SystemUserId) }}</th>
-                        <td><label>
+                        <td>
+                            <div class="error_validation_inline">
                                 {{ form_errors(form.search.SystemUserId) }}
+                            </div>
                                 {{ form_widget(form.search.SystemUserId) }}
-                            </label></td>
+                        </td>
                     </tr>
                     <tr>
                         <th>{{ form_label(form.search.IntegerData) }}</th>
-                        <td><label>
+                        <td>
+                            <div class="error_validation_inline">
                                 {{ form_errors(form.search.IntegerData) }}
+                            </div>
                                 {{ form_widget(form.search.IntegerData) }}
-                            </label></td>
+                        </td>
                     </tr>
                     <tr>
                         <th>{{ form_label(form.search.DefTest1) }}</th>
-                        <td><label>
+                        <td>
+                            <div class="error_validation_inline">
                                 {{ form_errors(form.search.DefTest1) }}
+                            </div>
                                 {{ form_widget(form.search.DefTest1) }}
-                            </label></td>
+                        </td>
                     </tr>
                     <tr>
                         <th>{{ form_label(form.search.systemuser) }}</th>

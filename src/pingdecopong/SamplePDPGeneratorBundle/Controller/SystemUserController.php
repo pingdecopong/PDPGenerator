@@ -150,13 +150,12 @@ class SystemUserController extends Controller
 
         $request = $this->getRequest();
         $formFactory = $this->get('form.factory');
-        //returnUrlデコード
-        $returnUrlQueryString = urldecode($request->get('ret'));
 
         $formModel = new SystemUser();
         $formType = new SystemUserType();
         $subFormModel = new SubFormModel();
         $subFormType = new SubFormType();
+        $subFormModel->setReturnAddress($request->get('ret'));
 
         /* @var $builder \Symfony\Component\Form\FormBuilderInterface */
         $builder =$formFactory->createBuilder();
@@ -187,7 +186,7 @@ class SystemUserController extends Controller
                             'mode' => "confirm",
                             'entity' => $formModel,
                             'form' => $confirmForm->createView(),
-                            'returnUrlParam' => $returnUrlQueryString,
+                            'returnUrlParam' => urldecode($subFormModel->getReturnAddress()),
                         );
 
                     }else if($buttonAction == "submit")
@@ -201,7 +200,8 @@ class SystemUserController extends Controller
                         }catch (\Exception $e){
                             throw $e;
                         }
-                        return $this->redirect($this->generateUrl('systemuser_show', array('id' => $formModel->getId())));                    }
+                            return $this->redirect($this->generateUrl('systemuser_show', array('id' => $formModel->getId(), 'ret' => $subFormModel->getReturnAddress())));
+                    }
                 }
             }else
             {
@@ -217,7 +217,7 @@ class SystemUserController extends Controller
             'validate' => false,
             'entity' => $formModel,
             'form' => $form->createView(),
-            'returnUrlParam' => $returnUrlQueryString,
+            'returnUrlParam' => urldecode($subFormModel->getReturnAddress()),
         );
     }
 
@@ -259,9 +259,12 @@ class SystemUserController extends Controller
     {
 
         $request = $this->getRequest();
-        //returnUrlデコード
-        $returnUrlQueryString = urldecode($request->get('ret'));
+        $formFactory = $this->get('form.factory');
+
         $formType = new SystemUserType();
+        $subFormModel = new SubFormModel();
+        $subFormType = new SubFormType();
+        $subFormModel->setReturnAddress($request->get('ret'));
 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('pingdecopongSamplePDPGeneratorBundle:SystemUser')->find($id);
@@ -270,15 +273,19 @@ class SystemUserController extends Controller
         }
 
         /* @var $builder \Symfony\Component\Form\FormBuilderInterface */
-        $builder = $this->get('form.factory')->createBuilder($formType, $entity);
-        $form = $builder->getForm();
+        $builder =$formFactory->createBuilder();
+        $mainFormBuilder = $formFactory->createBuilder($formType, $entity);
+        $subFormBuilder = $formFactory->createBuilder($subFormType, $subFormModel);
+        $form = $builder->add($mainFormBuilder)
+            ->add($subFormBuilder)
+            ->getForm();
 
         if($request->isMethod('POST'))
         {
             $form->bind($request);
 
             //button_action
-            $buttonAction = $request->request->get('_button_action');
+            $buttonAction = $subFormModel->getButtonAction();
 
             if($buttonAction == "confirm" || $buttonAction == "submit")
             {
@@ -294,7 +301,7 @@ class SystemUserController extends Controller
                             'mode' => "confirm",
                             'entity' => $entity,
                             'form' => $confirmForm->createView(),
-                            'returnUrlParam' => $returnUrlQueryString,
+                            'returnUrlParam' => urldecode($subFormModel->getReturnAddress()),
                         );
 
                     }else if($buttonAction == "submit")
@@ -307,7 +314,8 @@ class SystemUserController extends Controller
                         }catch (\Exception $e){
                             throw $e;
                         }
-                    return $this->redirect($this->generateUrl('systemuser_show', array('id' => $entity->getId())));                    }
+                        return $this->redirect($this->generateUrl('systemuser_show', array('id' => $entity->getId(), 'ret' => $subFormModel->getReturnAddress())));
+                    }
                 }
             }else
             {
@@ -322,7 +330,7 @@ class SystemUserController extends Controller
             'validate' => false,
             'entity' => $entity,
             'form' => $form->createView(),
-            'returnUrlParam' => $returnUrlQueryString,
+            'returnUrlParam' => urldecode($subFormModel->getReturnAddress()),
         );
     }
     /**
@@ -338,8 +346,10 @@ class SystemUserController extends Controller
         //returnUrlデコード
         $returnUrlQueryString = urldecode($request->get('ret'));
 
-        $form = $this->createFormBuilder(array('id' => $id))
+        $form = $this->createFormBuilder(array('id' => $id, 'returnAddress' => $returnUrlQueryString))
             ->add('id', 'hidden')
+            ->add('buttonAction', 'hidden')
+            ->add('returnAddress', 'hidden')
             ->getForm();
 
         $em = $this->getDoctrine()->getManager();
@@ -361,7 +371,10 @@ class SystemUserController extends Controller
                 }catch (\Exception $e){
                     throw $e;
                 }
-                return $this->redirect($this->generateUrl('systemuser'));
+                $data = $form->getData();
+                //returnUrlデコード
+                $returnUrlQueryString = urldecode($data['returnAddress']);
+                return $this->redirect($this->generateUrl('watertank').'?'.$returnUrlQueryString);
             }
         }
 

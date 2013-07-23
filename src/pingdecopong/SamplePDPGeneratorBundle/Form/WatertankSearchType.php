@@ -22,7 +22,7 @@ class WatertankSearchType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'pingdecopong\SamplePDPGeneratorBundle\Entity\Watertank'
+            'data_class' => 'pingdecopong\SamplePDPGeneratorBundle\Form\WatertankSearchModel'
         ));
     }
 

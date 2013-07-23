@@ -14,43 +14,65 @@
         </div>
         <form action="{{ path('watertank_new') }}" novalidate method="post" {{ form_enctype(form) }} name="watertank_new_form">
 
-            {{ form_errors(form) }}
+            <div class="error_validation">
+                {{ form_errors(form) }}
+            </div>
 
             <table width="600" border="0" cellpadding="0" cellspacing="0" class="detailTable">
                 <tr>
                     <th scope="row">{{ form_label(form.Watertank.Name) }}</th>
-                    <td><label>
+                    <td>
+                        <div class="error_validation_inline">
                             {{ form_errors(form.Watertank.Name) }}
+                        </div>
                             {{ form_widget(form.Watertank.Name) }}
-                        </label></td>
+                        <br/>
+                        <span class="input_notes">{{ form.Watertank.Name.vars.name }}</span>
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">{{ form_label(form.Watertank.SystemUserId) }}</th>
-                    <td><label>
+                    <td>
+                        <div class="error_validation_inline">
                             {{ form_errors(form.Watertank.SystemUserId) }}
+                        </div>
                             {{ form_widget(form.Watertank.SystemUserId) }}
-                        </label></td>
+                        <br/>
+                        <span class="input_notes">{{ form.Watertank.SystemUserId.vars.name }}</span>
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">{{ form_label(form.Watertank.IntegerData) }}</th>
-                    <td><label>
+                    <td>
+                        <div class="error_validation_inline">
                             {{ form_errors(form.Watertank.IntegerData) }}
+                        </div>
                             {{ form_widget(form.Watertank.IntegerData) }}
-                        </label></td>
+                        <br/>
+                        <span class="input_notes">{{ form.Watertank.IntegerData.vars.name }}</span>
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">{{ form_label(form.Watertank.DefTest1) }}</th>
-                    <td><label>
+                    <td>
+                        <div class="error_validation_inline">
                             {{ form_errors(form.Watertank.DefTest1) }}
+                        </div>
                             {{ form_widget(form.Watertank.DefTest1) }}
-                        </label></td>
+                        <br/>
+                        <span class="input_notes">{{ form.Watertank.DefTest1.vars.name }}</span>
+                    </td>
                 </tr>
                     <tr>
                         <th scope="row">{{ form_label(form.Watertank.systemuser) }}</th>
-                        <td><label>
+                        <td>
+                            <div class="error_validation_inline">
                                 {{ form_errors(form.Watertank.systemuser) }}
-                                {{ form_widget(form.Watertank.systemuser) }}
-                            </label></td>
+                            </div>
+                            {{ form_widget(form.Watertank.systemuser) }}
+                            <br/>
+                            <span class="input_notes">{{ form.Watertank.systemuser.vars.name }}</span>
+                        </td>
                     </tr>
             </table>
             <div class="submit_box">

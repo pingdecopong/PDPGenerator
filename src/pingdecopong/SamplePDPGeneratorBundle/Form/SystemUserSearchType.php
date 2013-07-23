@@ -18,7 +18,7 @@ class SystemUserSearchType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'pingdecopong\SamplePDPGeneratorBundle\Entity\SystemUser'
+            'data_class' => 'pingdecopong\SamplePDPGeneratorBundle\Form\SystemUserSearchModel'
         ));
     }
 

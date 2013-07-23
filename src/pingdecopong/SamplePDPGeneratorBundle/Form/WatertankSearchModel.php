@@ -1,15 +1,15 @@
 <?php
 
-namespace pingdecopong\SamplePDPGeneratorBundle\Entity;
+namespace pingdecopong\SamplePDPGeneratorBundle\Form;
 
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Watertank
+ * WatertankSearchModel
  */
-class Watertank
+class WatertankSearchModel
 {
     /**
      * @var integer
@@ -18,8 +18,7 @@ class Watertank
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Length(max="10")
+     * @Assert\Length(max="4")
      */
     private $Name;
 
@@ -59,7 +58,7 @@ class Watertank
      * Set Name
      *
      * @param string $name
-     * @return Watertank
+     * @return WatertankSearchModel
      */
     public function setName($name)
     {
@@ -82,7 +81,7 @@ class Watertank
      * Set SystemUserId
      *
      * @param integer $systemUserId
-     * @return Watertank
+     * @return WatertankSearchModel
      */
     public function setSystemUserId($systemUserId)
     {
@@ -105,7 +104,7 @@ class Watertank
      * Set IntegerData
      *
      * @param integer $integerData
-     * @return Watertank
+     * @return WatertankSearchModel
      */
     public function setIntegerData($integerData)
     {
@@ -128,7 +127,7 @@ class Watertank
      * Set DefTest1
      *
      * @param boolean $defTest1
-     * @return Watertank
+     * @return WatertankSearchModel
      */
     public function setDefTest1($defTest1)
     {
@@ -151,7 +150,7 @@ class Watertank
      * Set systemuser
      *
      * @param \pingdecopong\SamplePDPGeneratorBundle\Entity\SystemUser $systemuser
-     * @return Watertank
+     * @return WatertankSearchModel
      */
     public function setSystemuser(\pingdecopong\SamplePDPGeneratorBundle\Entity\SystemUser $systemuser = null)
     {

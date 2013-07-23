@@ -14,7 +14,9 @@ class WatertankType extends AbstractType
             ->add('Name')
             ->add('SystemUserId')
             ->add('IntegerData')
-            ->add('DefTest1')
+            ->add('DefTest1', 'checkbox', array(
+                'label'     => 'DefTest1',
+            ))
             ->add('systemuser')
         ;
     }

@@ -1,14 +1,13 @@
 <?php
 
-namespace pingdecopong\SamplePDPGeneratorBundle\Entity;
+namespace pingdecopong\SamplePDPGeneratorBundle\Form;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * SystemUser
+ * SystemUserSearchModel
  */
-class SystemUser
+class SystemUserSearchModel
 {
     /**
      * @var integer
@@ -17,7 +16,6 @@ class SystemUser
 
     /**
      * @var string
-     * @Assert\NotBlank()
      */
     private $email;
 
@@ -48,7 +46,7 @@ class SystemUser
      * Set email
      *
      * @param string $email
-     * @return SystemUser
+     * @return SystemUserSearchModel
      */
     public function setEmail($email)
     {
@@ -71,7 +69,7 @@ class SystemUser
      * Add watertanks
      *
      * @param \pingdecopong\SamplePDPGeneratorBundle\Entity\Watertank $watertanks
-     * @return SystemUser
+     * @return SystemUserSearchModel
      */
     public function addWatertank(\pingdecopong\SamplePDPGeneratorBundle\Entity\Watertank $watertanks)
     {
@@ -98,10 +96,5 @@ class SystemUser
     public function getWatertanks()
     {
         return $this->watertanks;
-    }
-
-    public function __toString()
-    {
-        return $this->email;
     }
 }

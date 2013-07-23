@@ -193,14 +193,12 @@ class WatertankController extends Controller
 
         $request = $this->getRequest();
         $formFactory = $this->get('form.factory');
-        //returnUrlデコード
-        $returnUrlQueryString = urldecode($request->get('ret'));
 
         $formModel = new Watertank();
         $formType = new WatertankType();
         $subFormModel = new SubFormModel();
         $subFormType = new SubFormType();
-        $subFormModel->setReturnAddress($returnUrlQueryString);
+        $subFormModel->setReturnAddress($request->get('ret'));
 
         /* @var $builder \Symfony\Component\Form\FormBuilderInterface */
         $builder =$formFactory->createBuilder();
@@ -231,7 +229,7 @@ class WatertankController extends Controller
                             'mode' => "confirm",
                             'entity' => $formModel,
                             'form' => $confirmForm->createView(),
-                            'returnUrlParam' => $returnUrlQueryString,
+                            'returnUrlParam' => urldecode($subFormModel->getReturnAddress()),
                         );
 
                     }else if($buttonAction == "submit")
@@ -245,7 +243,8 @@ class WatertankController extends Controller
                         }catch (\Exception $e){
                             throw $e;
                         }
-                        return $this->redirect($this->generateUrl('watertank_show', array('id' => $formModel->getId(), 'ret' => $subFormModel->getReturnAddress())));                    }
+                            return $this->redirect($this->generateUrl('watertank_show', array('id' => $formModel->getId(), 'ret' => $subFormModel->getReturnAddress())));
+                    }
                 }
             }else
             {
@@ -261,7 +260,7 @@ class WatertankController extends Controller
             'validate' => false,
             'entity' => $formModel,
             'form' => $form->createView(),
-            'returnUrlParam' => $returnUrlQueryString,
+            'returnUrlParam' => urldecode($subFormModel->getReturnAddress()),
         );
     }
 
@@ -304,13 +303,11 @@ class WatertankController extends Controller
 
         $request = $this->getRequest();
         $formFactory = $this->get('form.factory');
-        //returnUrlデコード
-        $returnUrlQueryString = urldecode($request->get('ret'));
 
         $formType = new WatertankType();
         $subFormModel = new SubFormModel();
         $subFormType = new SubFormType();
-        $subFormModel->setReturnAddress($returnUrlQueryString);
+        $subFormModel->setReturnAddress($request->get('ret'));
 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('pingdecopongSamplePDPGeneratorBundle:Watertank')->find($id);
@@ -347,7 +344,7 @@ class WatertankController extends Controller
                             'mode' => "confirm",
                             'entity' => $entity,
                             'form' => $confirmForm->createView(),
-                            'returnUrlParam' => $returnUrlQueryString,
+                            'returnUrlParam' => urldecode($subFormModel->getReturnAddress()),
                         );
 
                     }else if($buttonAction == "submit")
@@ -360,7 +357,8 @@ class WatertankController extends Controller
                         }catch (\Exception $e){
                             throw $e;
                         }
-                    return $this->redirect($this->generateUrl('watertank_show', array('id' => $entity->getId(), 'ret' => $subFormModel->getReturnAddress())));                    }
+                        return $this->redirect($this->generateUrl('watertank_show', array('id' => $entity->getId(), 'ret' => $subFormModel->getReturnAddress())));
+                    }
                 }
             }else
             {
@@ -375,7 +373,7 @@ class WatertankController extends Controller
             'validate' => false,
             'entity' => $entity,
             'form' => $form->createView(),
-            'returnUrlParam' => $returnUrlQueryString,
+            'returnUrlParam' => urldecode($subFormModel->getReturnAddress()),
         );
     }
     /**
