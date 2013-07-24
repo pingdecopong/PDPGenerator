@@ -63,6 +63,26 @@ class WatertankController extends Controller
                 'sort_enable' => true,
                 'db_column_name' => 'DefTest1',
             ))
+            ->addColumn('ColumnText', array(
+                'label' => 'ColumnText',
+                'sort_enable' => true,
+                'db_column_name' => 'ColumnText',
+            ))
+            ->addColumn('ColumnDate', array(
+                'label' => 'ColumnDate',
+                'sort_enable' => true,
+                'db_column_name' => 'ColumnDate',
+            ))
+            ->addColumn('ColumnDatetime', array(
+                'label' => 'ColumnDatetime',
+                'sort_enable' => true,
+                'db_column_name' => 'ColumnDatetime',
+            ))
+            ->addColumn('ColumnTime', array(
+                'label' => 'ColumnTime',
+                'sort_enable' => true,
+                'db_column_name' => 'ColumnTime',
+            ))
         ;
 
         $form = $formFactory->createNamedBuilder('f', 'form', null, array('csrf_protection' => false))
@@ -125,6 +145,34 @@ class WatertankController extends Controller
         {
             $queryBuilder = $queryBuilder->andWhere('u.DefTest1 LIKE :Deftest1')
                 ->setParameter('Deftest1', '%'.$searchDeftest1.'%');
+        }
+        //ColumnText
+        $searchColumntext = $data['search']->getColumntext();
+        if(isset($searchColumntext) && $form['search']['ColumnText']->isValid())
+        {
+            $queryBuilder = $queryBuilder->andWhere('u.ColumnText LIKE :Columntext')
+                ->setParameter('Columntext', '%'.$searchColumntext.'%');
+        }
+        //ColumnDate
+        $searchColumndate = $data['search']->getColumndate();
+        if(isset($searchColumndate) && $form['search']['ColumnDate']->isValid())
+        {
+            $queryBuilder = $queryBuilder->andWhere('u.ColumnDate = :Columndate')
+                ->setParameter('Columndate', $searchColumndate);
+        }
+        //ColumnDatetime
+        $searchColumndatetime = $data['search']->getColumndatetime();
+        if(isset($searchColumndatetime) && $form['search']['ColumnDatetime']->isValid())
+        {
+            $queryBuilder = $queryBuilder->andWhere('u.ColumnDatetime = :Columndatetime')
+                ->setParameter('Columndatetime', $searchColumndatetime);
+        }
+        //ColumnTime
+        $searchColumntime = $data['search']->getColumntime();
+        if(isset($searchColumntime) && $form['search']['ColumnTime']->isValid())
+        {
+            $queryBuilder = $queryBuilder->andWhere('u.ColumnTime = :Columntime')
+                ->setParameter('Columntime', $searchColumntime);
         }
 
         //relation 検索

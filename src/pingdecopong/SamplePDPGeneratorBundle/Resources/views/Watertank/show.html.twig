@@ -35,6 +35,22 @@
                         <td>{{ entity.DefTest1 }}</td>
                 </tr>
                 <tr>
+                    <th scope="row">Columntext</th>
+                        <td>{{ entity.ColumnText }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Columndate</th>
+                        <td>{% if entity.ColumnDate %}{{ entity.ColumnDate|date('Y-m-d') }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Columndatetime</th>
+                        <td>{% if entity.ColumnDatetime %}{{ entity.ColumnDatetime|date('Y-m-d H:i:s') }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Columntime</th>
+                        <td>{% if entity.ColumnTime %}{{ entity.ColumnTime|date('H:i:s') }}{% endif %}</td>
+                </tr>
+                <tr>
                     <th scope="row">Systemuser</th>
                     <td>{{ entity.systemuser }}</td>
                 </tr>

@@ -25,7 +25,7 @@
                             <div class="error_validation_inline">
                                 {{ form_errors(form.search.Name) }}
                             </div>
-                                {{ form_widget(form.search.Name) }}
+                            {{ form_widget(form.search.Name) }}
                         </td>
                     </tr>
                     <tr>
@@ -34,7 +34,7 @@
                             <div class="error_validation_inline">
                                 {{ form_errors(form.search.SystemUserId) }}
                             </div>
-                                {{ form_widget(form.search.SystemUserId) }}
+                            {{ form_widget(form.search.SystemUserId) }}
                         </td>
                     </tr>
                     <tr>
@@ -43,7 +43,7 @@
                             <div class="error_validation_inline">
                                 {{ form_errors(form.search.IntegerData) }}
                             </div>
-                                {{ form_widget(form.search.IntegerData) }}
+                            {{ form_widget(form.search.IntegerData) }}
                         </td>
                     </tr>
                     <tr>
@@ -52,21 +52,60 @@
                             <div class="error_validation_inline">
                                 {{ form_errors(form.search.DefTest1) }}
                             </div>
-                                {{ form_widget(form.search.DefTest1) }}
+                            {{ form_widget(form.search.DefTest1) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{ form_label(form.search.ColumnText) }}</th>
+                        <td>
+                            <div class="error_validation_inline">
+                                {{ form_errors(form.search.ColumnText) }}
+                            </div>
+                            {{ form_widget(form.search.ColumnText) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{ form_label(form.search.ColumnDate) }}</th>
+                        <td>
+                            <div class="error_validation_inline">
+                                {{ form_errors(form.search.ColumnDate) }}
+                            </div>
+                            {{ form_widget(form.search.ColumnDate) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{ form_label(form.search.ColumnDatetime) }}</th>
+                        <td>
+                            <div class="error_validation_inline">
+                                {{ form_errors(form.search.ColumnDatetime) }}
+                            </div>
+                            {{ form_widget(form.search.ColumnDatetime) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{ form_label(form.search.ColumnTime) }}</th>
+                        <td>
+                            <div class="error_validation_inline">
+                                {{ form_errors(form.search.ColumnTime) }}
+                            </div>
+                            {{ form_widget(form.search.ColumnTime) }}
                         </td>
                     </tr>
                     <tr>
                         <th>{{ form_label(form.search.systemuser) }}</th>
-                        <td><label>
+                        <td>
+                            <div class="error_validation_inline">
                                 {{ form_errors(form.search.systemuser) }}
-                                {{ form_widget(form.search.systemuser) }}
-                            </label></td>
+                            </div>
+                            {{ form_widget(form.search.systemuser) }}
+                        </td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
                         <td nowrap>
                             <input class="button_100" type="submit" value="検索">
+                            <a href="{{ path('watertank') }}">条件リセット</a>
                         </td>
                     </tr>
                 </tfoot>
@@ -94,12 +133,12 @@
                             {% if header.Enable %}
                                 {% if header.sortSelected %}
                                     {% if header.SortType == 'asc' %}
-                                        <a href="{{ path(pager.LinkRouteName, header.query)|raw }}" >
-                                            {{ header.label }}↓
+                                        <a class="sort_asc" href="{{ path(pager.LinkRouteName, header.query)|raw }}" >
+                                            {{ header.label }}
                                         </a>
                                     {% elseif header.SortType == 'desc' %}
-                                        <a href="{{ path(pager.LinkRouteName, header.query)|raw }}" >
-                                            {{ header.label }}↑
+                                        <a class="sort_desc" href="{{ path(pager.LinkRouteName, header.query)|raw }}" >
+                                            {{ header.label }}
                                         </a>
                                     {% endif %}
                                 {% else %}
@@ -126,6 +165,10 @@
                     <td>{{ entity.SystemUserId }}</td>
                     <td>{{ entity.IntegerData }}</td>
                     <td>{{ entity.DefTest1 }}</td>
+                    <td>{{ entity.ColumnText }}</td>
+                    <td>{% if entity.ColumnDate %}{{ entity.ColumnDate|date('Y-m-d') }}{% endif %}</td>
+                    <td>{% if entity.ColumnDatetime %}{{ entity.ColumnDatetime|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if entity.ColumnTime %}{{ entity.ColumnTime|date('H:i:s') }}{% endif %}</td>
                     <td class="function_icon_cell">
                         <a href="{{ path('watertank_show', { 'id': entity.id, ret: returnUrlParam }) }}"><img src="{{ asset('bundles/pingdecopongpdpgenerator/img/table.png') }}" width="16" height="16"></a>
                     </td>
@@ -142,6 +185,17 @@
         <div class="pagerArea clearfix">
             <div class="pagerAreaLeft">
                     <ul class="pager">
+
+                        {% if pager.PagerSelector.PageNo.PrevPageStatus %}
+                            <li>
+                                <a href="{{ path(pager.LinkRouteName, pager.PagerSelector.PageNo.PrevPageQuery)|raw }}" >前のページ</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="#" >前のページ</a>
+                            </li>
+                        {% endif %}
+
                         {% for page in pager.PagerSelector.PageNo.Rows %}
 
                             {% if page.select %}
@@ -155,6 +209,17 @@
                             {% endif %}
 
                         {% endfor %}
+
+                        {% if pager.PagerSelector.PageNo.NextPageStatus %}
+                            <li>
+                                <a href="{{ path(pager.LinkRouteName, pager.PagerSelector.PageNo.NextPageQuery)|raw }}" >次のページ</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="#" >次のページ</a>
+                            </li>
+                        {% endif %}
+
                     </ul>
                     <label>表示件数
 

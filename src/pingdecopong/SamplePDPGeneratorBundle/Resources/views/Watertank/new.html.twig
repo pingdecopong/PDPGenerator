@@ -63,6 +63,50 @@
                         <span class="input_notes">{{ form.Watertank.DefTest1.vars.name }}</span>
                     </td>
                 </tr>
+                <tr>
+                    <th scope="row">{{ form_label(form.Watertank.ColumnText) }}</th>
+                    <td>
+                        <div class="error_validation_inline">
+                            {{ form_errors(form.Watertank.ColumnText) }}
+                        </div>
+                            {{ form_widget(form.Watertank.ColumnText) }}
+                        <br/>
+                        <span class="input_notes">{{ form.Watertank.ColumnText.vars.name }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">{{ form_label(form.Watertank.ColumnDate) }}</th>
+                    <td>
+                        <div class="error_validation_inline">
+                            {{ form_errors(form.Watertank.ColumnDate) }}
+                        </div>
+                            {{ form_widget(form.Watertank.ColumnDate) }}
+                        <br/>
+                        <span class="input_notes">{{ form.Watertank.ColumnDate.vars.name }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">{{ form_label(form.Watertank.ColumnDatetime) }}</th>
+                    <td>
+                        <div class="error_validation_inline">
+                            {{ form_errors(form.Watertank.ColumnDatetime) }}
+                        </div>
+                            {{ form_widget(form.Watertank.ColumnDatetime) }}
+                        <br/>
+                        <span class="input_notes">{{ form.Watertank.ColumnDatetime.vars.name }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">{{ form_label(form.Watertank.ColumnTime) }}</th>
+                    <td>
+                        <div class="error_validation_inline">
+                            {{ form_errors(form.Watertank.ColumnTime) }}
+                        </div>
+                            {{ form_widget(form.Watertank.ColumnTime) }}
+                        <br/>
+                        <span class="input_notes">{{ form.Watertank.ColumnTime.vars.name }}</span>
+                    </td>
+                </tr>
                     <tr>
                         <th scope="row">{{ form_label(form.Watertank.systemuser) }}</th>
                         <td>

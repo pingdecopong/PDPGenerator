@@ -4,8 +4,6 @@ namespace pingdecopong\SamplePDPGeneratorBundle\Form;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
  * WatertankSearchModel
  */
@@ -18,7 +16,6 @@ class WatertankSearchModel
 
     /**
      * @var string
-     * @Assert\Length(max="4")
      */
     private $Name;
 
@@ -29,7 +26,6 @@ class WatertankSearchModel
 
     /**
      * @var integer
-     * @Assert\Type(type="numeric")
      */
     private $IntegerData;
 
@@ -37,6 +33,26 @@ class WatertankSearchModel
      * @var boolean
      */
     private $DefTest1;
+
+    /**
+     * @var string
+     */
+    private $ColumnText;
+
+    /**
+     * @var \DateTime
+     */
+    private $ColumnDate;
+
+    /**
+     * @var \DateTime
+     */
+    private $ColumnDatetime;
+
+    /**
+     * @var \DateTime
+     */
+    private $ColumnTime;
 
     /**
      * @var \pingdecopong\SamplePDPGeneratorBundle\Entity\SystemUser
@@ -144,6 +160,98 @@ class WatertankSearchModel
     public function getDefTest1()
     {
         return $this->DefTest1;
+    }
+
+    /**
+     * Set ColumnText
+     *
+     * @param string $columnText
+     * @return WatertankSearchModel
+     */
+    public function setColumnText($columnText)
+    {
+        $this->ColumnText = $columnText;
+    
+        return $this;
+    }
+
+    /**
+     * Get ColumnText
+     *
+     * @return string 
+     */
+    public function getColumnText()
+    {
+        return $this->ColumnText;
+    }
+
+    /**
+     * Set ColumnDate
+     *
+     * @param \DateTime $columnDate
+     * @return WatertankSearchModel
+     */
+    public function setColumnDate($columnDate)
+    {
+        $this->ColumnDate = $columnDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get ColumnDate
+     *
+     * @return \DateTime 
+     */
+    public function getColumnDate()
+    {
+        return $this->ColumnDate;
+    }
+
+    /**
+     * Set ColumnDatetime
+     *
+     * @param \DateTime $columnDatetime
+     * @return WatertankSearchModel
+     */
+    public function setColumnDatetime($columnDatetime)
+    {
+        $this->ColumnDatetime = $columnDatetime;
+    
+        return $this;
+    }
+
+    /**
+     * Get ColumnDatetime
+     *
+     * @return \DateTime 
+     */
+    public function getColumnDatetime()
+    {
+        return $this->ColumnDatetime;
+    }
+
+    /**
+     * Set ColumnTime
+     *
+     * @param \DateTime $columnTime
+     * @return WatertankSearchModel
+     */
+    public function setColumnTime($columnTime)
+    {
+        $this->ColumnTime = $columnTime;
+    
+        return $this;
+    }
+
+    /**
+     * Get ColumnTime
+     *
+     * @return \DateTime 
+     */
+    public function getColumnTime()
+    {
+        return $this->ColumnTime;
     }
 
     /**

@@ -24,6 +24,18 @@ pingdecopong\SamplePDPGeneratorBundle\Entity\Watertank:
         DefTest1:
             type: boolean
             nullable: true
+        ColumnText:
+            type: text
+            nullable: true
+        ColumnDate:
+            type: date
+            nullable: true
+        ColumnDatetime:
+            type: datetime
+            nullable: true
+        ColumnTime:
+            type: time
+            nullable: true
     oneToMany: {  }
     manyToOne:
         systemuser:
