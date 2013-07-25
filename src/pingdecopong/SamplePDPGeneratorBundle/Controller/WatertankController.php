@@ -85,6 +85,7 @@ class WatertankController extends Controller
             ))
         ;
 
+        /* @var $form \Symfony\Component\Form\Form */
         $form = $formFactory->createNamedBuilder('f', 'form', null, array('csrf_protection' => false))
             ->add($pager->getFormBuilder())
             ->add('search', new WatertankSearchType())
@@ -112,63 +113,66 @@ class WatertankController extends Controller
         }
 
         //db
+        /* @var $queryBuilder \Doctrine\ORM\QueryBuilder */
         $queryBuilder = $this->getDoctrine()
             ->getRepository('pingdecopongSamplePDPGeneratorBundle:Watertank')
             ->createQueryBuilder('u');
 
         //検索
         $data = $form->getData();
+        /** @var $searchParam Watertank */
+        $searchParam = $data['search'];
         //Name
-        $searchName = $data['search']->getName();
+        $searchName = $searchParam->getName();
         if(isset($searchName) && $form['search']['Name']->isValid())
         {
             $queryBuilder = $queryBuilder->andWhere('u.Name LIKE :Name')
                 ->setParameter('Name', '%'.$searchName.'%');
         }
         //SystemUserId
-        $searchSystemuserid = $data['search']->getSystemuserid();
+        $searchSystemuserid = $searchParam->getSystemuserid();
         if(isset($searchSystemuserid) && $form['search']['SystemUserId']->isValid())
         {
             $queryBuilder = $queryBuilder->andWhere('u.SystemUserId = :Systemuserid')
                 ->setParameter('Systemuserid', $searchSystemuserid);
         }
         //IntegerData
-        $searchIntegerdata = $data['search']->getIntegerdata();
+        $searchIntegerdata = $searchParam->getIntegerdata();
         if(isset($searchIntegerdata) && $form['search']['IntegerData']->isValid())
         {
             $queryBuilder = $queryBuilder->andWhere('u.IntegerData = :Integerdata')
                 ->setParameter('Integerdata', $searchIntegerdata);
         }
         //DefTest1
-        $searchDeftest1 = $data['search']->getDeftest1();
+        $searchDeftest1 = $searchParam->getDeftest1();
         if(isset($searchDeftest1) && $form['search']['DefTest1']->isValid())
         {
             $queryBuilder = $queryBuilder->andWhere('u.DefTest1 LIKE :Deftest1')
                 ->setParameter('Deftest1', '%'.$searchDeftest1.'%');
         }
         //ColumnText
-        $searchColumntext = $data['search']->getColumntext();
+        $searchColumntext = $searchParam->getColumntext();
         if(isset($searchColumntext) && $form['search']['ColumnText']->isValid())
         {
             $queryBuilder = $queryBuilder->andWhere('u.ColumnText LIKE :Columntext')
                 ->setParameter('Columntext', '%'.$searchColumntext.'%');
         }
         //ColumnDate
-        $searchColumndate = $data['search']->getColumndate();
+        $searchColumndate = $searchParam->getColumndate();
         if(isset($searchColumndate) && $form['search']['ColumnDate']->isValid())
         {
             $queryBuilder = $queryBuilder->andWhere('u.ColumnDate = :Columndate')
                 ->setParameter('Columndate', $searchColumndate);
         }
         //ColumnDatetime
-        $searchColumndatetime = $data['search']->getColumndatetime();
+        $searchColumndatetime = $searchParam->getColumndatetime();
         if(isset($searchColumndatetime) && $form['search']['ColumnDatetime']->isValid())
         {
             $queryBuilder = $queryBuilder->andWhere('u.ColumnDatetime = :Columndatetime')
                 ->setParameter('Columndatetime', $searchColumndatetime);
         }
         //ColumnTime
-        $searchColumntime = $data['search']->getColumntime();
+        $searchColumntime = $searchParam->getColumntime();
         if(isset($searchColumntime) && $form['search']['ColumnTime']->isValid())
         {
             $queryBuilder = $queryBuilder->andWhere('u.ColumnTime = :Columntime')
@@ -177,7 +181,7 @@ class WatertankController extends Controller
 
         //relation 検索
         //systemuser
-        $searchSystemuser = $data['search']->getSystemuser();
+        $searchSystemuser = $searchParam->getSystemuser();
         if(isset($searchSystemuser) && $form['search']['systemuser']->isValid())
         {
             $queryBuilder = $queryBuilder->andWhere('u.systemuser = :Systemuser')
@@ -340,7 +344,7 @@ class WatertankController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Watertank entity.
+     * Watertank編集
      *
      * @Route("/edit/{id}", name="watertank_edit")
      * @Method({"GET", "POST"})
@@ -425,7 +429,7 @@ class WatertankController extends Controller
         );
     }
     /**
-     * Deletes a Watertank entity.
+     * Watertank削除
      *
      * @Route("/delete/{id}", name="watertank_delete")
      * @Method({"GET", "POST"})
